@@ -70,8 +70,55 @@ class LinkedList :
             print("Index not present")
         
     
+    def remove_first_node(self): 
+        if self.head == None : 
+            return 
+
+        self.head = self.head.next 
     
-         
+    def remove_last_node(self) : 
+        if self.head == None : 
+            return 
+        current_node = self.head 
         
+        while (current_node.next!=None) : 
+            current_node = current_node.next 
+        
+        current_node = None 
+        
+    def remove_at_index(self,index) : 
+        if self.head == None : 
+            return 
+        if index == 0 : 
+            self.remove_first_node()
+        count = 0 
+        current_node = self.head 
+        while (current_node != None and count+1 != index) : 
+            current_node = current_node.next 
+        
+        if current_node is None or current_node.next  is None : 
+            print("Index not present")
+        
+        else : 
+            current_node.next = current_node.next.next 
+    
+    def remove_node(self,data): 
+        current_node = self.head
+
+        if current_node.data == data:
+            self.remove_first_node()
+            return
+
+        while current_node is not None and current_node.next.data != data:
+            current_node = current_node.next
+
+        if current_node is None:
+            return
+        else:
+            current_node.next = current_node.next.next        
+            
+            
+            
+            
                     
     
