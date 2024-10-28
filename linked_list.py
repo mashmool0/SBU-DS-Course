@@ -118,7 +118,19 @@ class LinkedList :
             current_node.next = current_node.next.next        
             
             
+    def printLL(self) : 
+        if self.head == None : 
+            return 
+        
+        current_node =self.head 
+        
+        while (current_node != None ) : 
+            print(current_node.data) 
             
+            current_node = current_node.next 
             
+        
+            
+        
                     
     
