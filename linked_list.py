@@ -8,7 +8,7 @@ class LinkedList :
     def __init__(self) -> None:
         self.head = None 
     
-    def InsertionAtBegin(self,data):
+    def InsertAtBegin(self,data):
         new_node = Node(data)  
         if self.head == None : 
             self.head = new_node  
@@ -20,7 +20,7 @@ class LinkedList :
 
     def InsertAtIndex(self,data,index) : 
         if index == 0 : 
-            self.InsertionAtBegin(self,data) 
+            self.InsertAtBegin(data)
         
         count = 0 
         current = self.head  
@@ -53,18 +53,18 @@ class LinkedList :
         current_node.next = new_node 
         
         
-    def UpdateNode(self,data,index) : 
-        new_node = Node(data) 
+    def UpdateNode(self,val,index) : 
         count = 0 
-        if count == index  : 
-            current_node.data = data 
         current_node = self.head 
+        
+        if count == index  : 
+            current_node.data = val 
         while (current_node != None and count != index)  : 
             current_node = current_node.next 
             count += 1 
         
         if current_node != None  : 
-            current_node.data = new_node.data 
+            current_node.data = val
         
         else : 
             print("Index not present")
@@ -76,15 +76,20 @@ class LinkedList :
 
         self.head = self.head.next 
     
-    def remove_last_node(self) : 
-        if self.head == None : 
-            return 
-        current_node = self.head 
+    def remove_last_node(self):
+        if self.head is None:
+            return
+        if self.head.next is None:
+            # Handle case where only one node exists
+            self.head = None
+            return
+
+        # Fixed logic to stop at second last node
+        current_node = self.head
+        while current_node.next.next is not None:
+            current_node = current_node.next
         
-        while (current_node.next!=None) : 
-            current_node = current_node.next 
-        
-        current_node = None 
+        current_node.next = None
         
     def remove_at_index(self,index) : 
         if self.head == None : 
@@ -102,20 +107,23 @@ class LinkedList :
         else : 
             current_node.next = current_node.next.next 
     
-    def remove_node(self,data): 
-        current_node = self.head
+    def remove_node(self, data):
+        if self.head is None:
+            return
 
+        current_node = self.head
         if current_node.data == data:
             self.remove_first_node()
             return
 
-        while current_node is not None and current_node.next.data != data:
+        # Fixed to check if next node exists
+        while current_node.next is not None and current_node.next.data != data:
             current_node = current_node.next
 
-        if current_node is None:
-            return
+        if current_node.next is None:
+            print("Data not present")
         else:
-            current_node.next = current_node.next.next        
+            current_node.next = current_node.next.next  
             
             
     def printLL(self) : 
