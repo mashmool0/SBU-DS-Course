@@ -16,6 +16,7 @@ void bubbleSort(long long tavan_ans[], long long zarib_ans[], int len_max)
         }
     }
 }
+
 bool isZeroResult(long long zarib_ans[], int len_max)
 {
     for (int i = 0; i < len_max; i++)
@@ -27,6 +28,7 @@ bool isZeroResult(long long zarib_ans[], int len_max)
     }
     return true;
 }
+
 void printArray(long long arr[], int size)
 {
     for (int i = 0; i < size; i++)
@@ -38,109 +40,73 @@ void printArray(long long arr[], int size)
 
 void sumTwoArray(long long zarib1[], long long tavan1[], long long zarib2[], long long tavan2[], long long zarib_ans[], long long tavan_ans[], int n, int m, int *len_max)
 {
+    map<int, long long> result; //---------------- Combined terms with the same powers
+
+    // Process first array
     for (int i = 0; i < n; i++)
     {
-        bool is_eq = false;
-        for (int j = 0; j < m; j++)
-        {
-            if (tavan1[i] == tavan2[j])
-            {
-                zarib_ans[i] = zarib1[i] + zarib2[j];
-                tavan_ans[i] = tavan1[i];
-                is_eq = true;
-                break;
-            }
-        }
-        if (is_eq)
-        {
-            continue;
-        }
-        tavan_ans[i] = tavan1[i];
-        zarib_ans[i] = zarib1[i];
+        result[tavan1[i]] += zarib1[i];
     }
-    // TODO : Check tavan2 was in tavan ans
+
+    // Process second array
     for (int i = 0; i < m; i++)
     {
-        int it_was = false;
-        for (int j = 0; j < n; j++)
+        result[tavan2[i]] += zarib2[i];
+    }
+
+    *len_max = 0;
+    for (const auto &entry : result)
+    {
+        if (entry.second != 0)
         {
-            if (tavan2[i] == tavan_ans[j])
-            {
-                it_was = true;
-                break;
-            }
-        }
-        if (it_was)
-        {
-            continue;
-        }
-        else
-        {
-            tavan_ans[*len_max] = tavan2[i];
-            zarib_ans[*len_max] = zarib2[i];
-            (*len_max) += 1;
+            tavan_ans[*len_max] = entry.first;
+            zarib_ans[*len_max] = entry.second;
+            (*len_max)++;
         }
     }
-    bubbleSort(tavan_ans, zarib_ans, *len_max);
 }
 
 void subTwoArray(long long zarib1[], long long tavan1[], long long zarib2[], long long tavan2[], long long zarib_ans[], long long tavan_ans[], int n, int m, int *len_max)
 {
+    map<int, long long> result; //---------------- Combined terms with the same powers for subtraction
+
+    // Process first array
     for (int i = 0; i < n; i++)
     {
-        bool is_eq = false;
-        for (int j = 0; j < m; j++)
-        {
-            if (tavan1[i] == tavan2[j])
-            {
-                zarib_ans[i] = zarib1[i] - zarib2[j];
-                tavan_ans[i] = tavan1[i];
-                is_eq = true;
-                break;
-            }
-        }
-        if (is_eq)
-        {
-            continue;
-        }
-        tavan_ans[i] = tavan1[i];
-        zarib_ans[i] = zarib1[i];
+        result[tavan1[i]] += zarib1[i];
     }
-    // TODO : Check tavan2 was in tavan ans
+
+    // Process second array with subtraction
     for (int i = 0; i < m; i++)
     {
-        int it_was = false;
-        for (int j = 0; j < n; j++)
+        result[tavan2[i]] -= zarib2[i];
+    }
+
+    *len_max = 0;
+    for (const auto &entry : result)
+    {
+        if (entry.second != 0)
         {
-            if (tavan2[i] == tavan_ans[j])
-            {
-                it_was = true;
-                break;
-            }
-        }
-        if (it_was)
-        {
-            continue;
-        }
-        else
-        {
-            tavan_ans[*len_max] = tavan2[i];
-            zarib_ans[*len_max] = zarib2[i] * -1;
-            (*len_max) += 1;
+            tavan_ans[*len_max] = entry.first;
+            zarib_ans[*len_max] = entry.second;
+            (*len_max)++;
         }
     }
-    bubbleSort(tavan_ans, zarib_ans, *len_max);
 }
 
 void mulTowArray(long long zarib1[], long long tavan1[], long long zarib2[], long long tavan2[], long long zarib_ans[], long long tavan_ans[], int n, int m, int *len_max)
 {
-    map<int, long long> result; //----------------
+    map<int, long long> result; //---------------- Handled multiplication with zero coefficients
 
     // Iterate over both polynomials
     for (int i = 0; i < n; i++)
     {
+        if (zarib1[i] == 0)
+            continue; //---------------- Skip zero coefficients
         for (int j = 0; j < m; j++)
         {
+            if (zarib2[j] == 0)
+                continue; //---------------- Skip zero coefficients
             int jam_tavan = tavan1[i] + tavan2[j];
             long long zarb_zarib = zarib1[i] * zarib2[j];
 
@@ -160,8 +126,6 @@ void mulTowArray(long long zarib1[], long long tavan1[], long long zarib2[], lon
             (*len_max)++;
         }
     }
-
-    // Sorting is not required here because map iterates in ascending order of keys by default
 }
 
 int main()
@@ -218,7 +182,6 @@ int main()
         sumTwoArray(zarib1, tavan1, zarib2, tavan2, zarib_ans, tavan_ans, n, m, &len_max);
         if (isZeroResult(zarib_ans, len_max))
         {
-            // If result is zero, set len_max to 1 and print zero arrays
             len_max = 1;
             cout << len_max << endl;
             cout << "0" << endl;
@@ -236,7 +199,6 @@ int main()
         subTwoArray(zarib1, tavan1, zarib2, tavan2, zarib_ans, tavan_ans, n, m, &len_max);
         if (isZeroResult(zarib_ans, len_max))
         {
-            // If result is zero, set len_max to 1 and print zero arrays
             len_max = 1;
             cout << len_max << endl;
             cout << "0" << endl;
