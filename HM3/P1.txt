@@ -1,0 +1,145 @@
+class Node(data = null, next = null):
+    this.data = data
+    this.next = next
+
+// sample cycle -> 1 -> 2 -> 3 -> 4 -> 1
+class LinkedList(head = null, size = 0):
+	this.head = head
+	this.size = size
+	this.cycle = false 
+
+	// Constructor
+	constructor -> head = null , size = 0 
+
+	// if user want create linked list without cycle can use this method for add item 	
+	function addNodeWithoutCycle(node):
+		if this.cycle : 
+		 	print("Cannot add item without cycle. The list already has a cycle."))
+		 	return 
+
+		if this.head == null:  // empty list 
+			this.head = node
+			return 
+
+		// add node last item 
+		current = head 
+		while (current.next != null):
+			current = current.next 
+		current.next = node 
+		this.size += 1 
+		
+	// if user want create a linked list with cycle can use this method for add item 
+	function addNodeWithCycle(node,target_node) : 
+		if head == null : 
+			this.head = node 
+			this.head.next = this.head 
+			this.size += 1 
+
+			
+		current = this.head 
+		is_target_exist = false 
+		count = 0 
+		while (count <= this.size) : 
+			if target_node == current : 
+				is_target_exist = true 
+				break; 
+				
+			current = current.next
+			count++  
+		
+		if is_target_exist : 
+			current.next = node 
+			current.next.next = target
+			this.size += 1 
+    		else : 
+    			print("please check your target !!")
+    			return 
+    	
+    	
+	// using this algorithm : Floyd's Cycle Detection
+	function is_cycle(): 
+		if this.cycle == true : return true 
+	
+		if this.head == null: 
+		    print("List is Empty") 
+		    return false 
+
+		slow = this.head 
+		fast = this.head 
+
+		// 1 -> 2 -> 3 -> 4 -> 1
+
+		while (fast != null and fast.next != null): 
+		    fast = fast.next.next 
+		    slow = slow.next 
+
+		    if slow == fast: 
+	    		this.cycle = true 
+			return true  
+		
+		this.cycle = false 
+		return false 
+	
+	// using Floyd's algorithm 
+	function find_start_item(node) : 
+		if this.head == null : 
+			print("List is Empty")
+			return 
+		if !this.cycle  : 
+			print("You can't do this you should have cycle ")
+			return 
+		
+		
+		slow = head 
+		fast = head 
+			
+		while (true) : 
+			slow = slow.next 
+			fast = fast.next.next 
+			
+			if fast == slow : 
+				break ; 
+		
+		slow = head 
+		
+		while slow != fast  : 
+			slow = slow.next 
+			fast = fast.next 
+		
+		// 1 -> 2 -> 3 -> 4   back to 2 
+		return slow 
+		
+
+	function removeAllNodeInCycle() : 
+		if head == null : 
+			print("List is Empty") 
+			return 
+		if !this.cycle : 
+			print("You should have Cycle for using this item")
+			
+		current = head 
+		while (current.next != null)  : 
+			temp = current  
+			del current 
+			current = temp.next 
+	
+
+		
+
+		// update details 
+		this.cycle = false
+		this.size = 0
+		print("Cycle removed successfully.")
+
+
+function main():
+    // Create a linked list and test functionality
+    linkedList = LinkedList()
+    linkedList.addNodeWithCycle(Node(1))
+    linkedList.addNodeWithCycle(Node(2))
+    linkedList.addNodeWithCycle(Node(3))
+    linkedList.addNodeWithCycle(Node(4))
+
+    print("Cycle detected: ", linkedList.is_cycle())
+			
+
