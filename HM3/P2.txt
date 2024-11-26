@@ -1,0 +1,60 @@
+Class Node:
+    Function __init__(next=None, data=0):
+        next = next  # Points to the next node in the list
+        data = data  # Holds the data for the node
+
+Class LinkedList:
+    Function __init__(head=None):
+        head = head  # Initialize the linked list with a head node
+
+    Function add(node):
+        If head is None:
+            head = node  # If the list is empty, set the new node as head
+            Return
+        current = head  # Start from the head node
+        While current.next is not None:
+            current = current.next  # Traverse to the last node
+        current.next = node  # Add the new node at the end of the list
+
+    Function printList():
+        current = head  # Start from the head node
+        If current is None:
+            Print "List is empty."  # If the list is empty, print a message and return
+            Return
+        While current is not None:
+            Print current.data  # Print the data of the current node
+            current = current.next  # Move to the next node
+
+Function mergeTwoSortedList(lst1, lst2):
+    lst = LinkedList()  # Create a new empty linked list for the result
+    lst.head = Node()  # Temporary node to help build the merged list
+    current_ans = lst.head  # Pointer to the current node in the merged list
+
+    current1 = lst1.head  # Start from the head of the first list
+    current2 = lst2.head  # Start from the head of the second list
+
+    While current1 is not None and current2 is not None:
+        If current1.data <= current2.data:
+            current_ans.next = Node(current1.data)  # Add current1's data
+            current1 = current1.next  # Move to the next node in lst1
+        Else:
+            current_ans.next = Node(current2.data)  # Add current2's data
+            current2 = current2.next  # Move to the next node in lst2
+        current_ans = current_ans.next  # Move to the next node in the merged list
+
+    # Add any remaining nodes from lst1 or lst2
+    While current1 is not None:
+        current_ans.next = Node(current1.data)  # Add remaining data from lst1
+        current1 = current1.next  # Move to the next node in lst1
+        current_ans = current_ans.next  # Move to the next node in the merged list
+
+    While current2 is not None:
+        current_ans.next = Node(current2.data)  # Add remaining data from lst2
+        current2 = current2.next  # Move to the next node in lst2
+        current_ans = current_ans.next  # Move to the next node in the merged list
+
+    lst.printList()  # Print the merged list
+
+# Example usage:
+# Create two sorted linked lists (lst1 and lst2)
+# Call mergeTwoSortedList(lst1, lst2) to merge and print the result
