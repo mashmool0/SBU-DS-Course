@@ -1,0 +1,67 @@
+CLASS Node
+    FUNCTION __init__(node: Node = None, data: Integer = None)
+        SET self.next = node
+        SET self.data = data
+
+CLASS LinkedList
+    SET size = 0
+
+    FUNCTION __init__(head: Node = None)
+        SET self.head = head
+
+    FUNCTION add(node: Node)
+        IF self.head IS None THEN
+            SET self.head = node
+            INCREMENT self.size
+            RETURN
+
+        SET current = self.head
+
+        WHILE current.next IS NOT None DO
+            SET current = current.next
+
+        SET current.next = node
+        INCREMENT self.size
+
+    FUNCTION calcSize() -> Integer
+        SET current = self.head
+        IF current IS None THEN
+            PRINT "List is Empty"
+            RETURN 0
+
+        SET count = 0
+        WHILE current IS NOT None DO
+            SET current = current.next
+            INCREMENT count
+
+        SET self.size = count
+        RETURN count
+
+    FUNCTION printFromHere(current: Node)
+        WHILE current IS NOT None DO
+            PRINT current.data
+            SET current = current.next
+
+    FUNCTION last_n(n: Integer)
+        IF self.head IS None THEN
+            PRINT "List is Empty"
+            RETURN
+
+        IF n == 0 THEN
+            RETURN
+
+        SET current = self.head
+        SET count = self.size
+
+        WHILE True DO
+            IF count == n THEN
+                BREAK
+
+            IF current.next IS None THEN
+                PRINT "n is bigger than size of linked list"
+                RETURN
+
+            DECREMENT count
+            SET current = current.next
+
+        RETURN current
