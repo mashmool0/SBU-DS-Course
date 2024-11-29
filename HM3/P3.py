@@ -25,12 +25,6 @@ class LinkedList:
         current.next = node
         self.size += 1
 
-    def printFromHere(self, current: Node):
-        while (current != None):
-            print(current.data)
-            current = current.next
-
-    # if we cant have size in our class we can use this function
     def calcSize(self):
         current = self.head
         if current == None:
@@ -44,6 +38,11 @@ class LinkedList:
 
         self.size = count
         return count
+
+    def printFromHere(self, current: Node):
+        while (current != None):
+            print(current.data)
+            current = current.next
 
     def last_n(self, n):
         if self.head == None:
