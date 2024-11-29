@@ -23,5 +23,3 @@ class DoublyLinkedList:
 
         current.next = new_node
         new_node.prev = current
-
-    def
