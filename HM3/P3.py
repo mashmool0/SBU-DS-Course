@@ -119,6 +119,7 @@ def test_linked_list():
     lst6.calcSize()
     node = lst6.last_n(1)  # Should print 100
     lst6.printFromHere(node)
+
     print("---")
 
     print("Test Case 7: Request last n where n equals size of the list.")
