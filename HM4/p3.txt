@@ -1,0 +1,23 @@
+class NodeQueue  : 
+    data = null ; 
+    next = null ; 
+
+    Constructore (data,next) : 
+        self.date = date ; 
+        self.next = next ;
+
+
+Class QueueLinkedList : 
+
+    NodeQueue head = null ; 
+
+    
+    Function enqueue(self,data) : 
+        if (self.head == null ) : 
+            self.head = Node(data=data)
+            self.head.next = self.head ; 
+            return 
+        
+        current = self.head 
+
+        while (current)
