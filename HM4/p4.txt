@@ -1,0 +1,71 @@
+CLASS MagicStack:
+    PRIVATE:
+        mainStack[]    // Main stack to store elements
+        minStack[]     // Auxiliary stack to track minimums
+        top1          // Top pointer for mainStack
+        top2          // Top pointer for minStack
+        capacity      // Maximum capacity of stack
+    
+    PUBLIC:
+        // Constructor
+        MagicStack(maxSize):
+            capacity = maxSize
+            mainStack = new Array[capacity]
+            minStack = new Array[capacity]
+            top1 = -1
+            top2 = -1
+
+        // Check if stack is empty
+        FUNCTION isEmpty():
+            RETURN top1 == -1
+
+        // Check if stack is full
+        FUNCTION isFull():
+            RETURN top1 == capacity - 1
+
+        // Push element to stack
+        FUNCTION push(element):
+            IF isFull():
+                PRINT "Stack overflow"
+                RETURN false
+            
+            // Push to main stack
+            top1 = top1 + 1
+            mainStack[top1] = element
+            
+            // Update minimum stack
+            IF top2 == -1 OR element <= minStack[top2]:
+                top2 = top2 + 1
+                minStack[top2] = element
+            
+            RETURN true
+
+        // Pop element from stack
+        FUNCTION pop():
+            IF isEmpty():
+                PRINT "Stack underflow"
+                RETURN null
+            
+            // Get top element from main stack
+            element = mainStack[top1]
+            
+            // If popped element is current minimum, update minStack
+            IF element == minStack[top2]:
+                top2 = top2 - 1
+            
+            top1 = top1 - 1
+            RETURN element
+
+        // Get top element without removing
+        FUNCTION top():
+            IF isEmpty():
+                PRINT "Stack is empty"
+                RETURN null
+            RETURN mainStack[top1]
+
+        // Get minimum element in O(1) time
+        FUNCTION getMin():
+            IF isEmpty():
+                PRINT "Stack is empty"
+                RETURN null
+            RETURN minStack[top2]
