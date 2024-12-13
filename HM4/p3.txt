@@ -1,23 +1,81 @@
-class NodeQueue  : 
-    data = null ; 
-    next = null ; 
 
-    Constructore (data,next) : 
-        self.date = date ; 
-        self.next = next ;
-
-
-Class QueueLinkedList : 
-
-    NodeQueue head = null ; 
-
+// Initialize the structure
+CLASS CircularQueue:
+    PRIVATE:
+        array[MAX_SIZE]  // The array to store elements
+        front           // Index of front element
+        rear            // Index of rear element
+        size           // Current number of elements
+        capacity       // Maximum capacity of queue
     
-    Function enqueue(self,data) : 
-        if (self.head == null ) : 
-            self.head = Node(data=data)
-            self.head.next = self.head ; 
-            return 
-        
-        current = self.head 
+    PUBLIC:
+        // Constructor
+        CircularQueue(maxSize):
+            capacity = maxSize
+            front = -1
+            rear = -1
+            size = 0
+            array = new Array[capacity]
 
-        while (current)
+        // Check if queue is empty
+        FUNCTION isEmpty():
+            RETURN size == 0
+
+        // Check if queue is full
+        FUNCTION isFull():
+            RETURN size == capacity
+
+        // Add element to queue
+        FUNCTION enqueue(element):
+            IF isFull():
+                PRINT "Queue is full"
+                RETURN false
+            
+            IF isEmpty():
+                front = 0
+            
+            rear = (rear + 1) % capacity
+            array[rear] = element
+            size = size + 1
+            RETURN true
+
+        // Remove element from queue
+        FUNCTION dequeue():
+            IF isEmpty():
+                PRINT "Queue is empty"
+                RETURN null
+            
+            element = array[front]
+            
+            IF front == rear:  // Last element
+                front = -1
+                rear = -1
+            ELSE:
+                front = (front + 1) % capacity
+            
+            size = size - 1
+            RETURN element
+
+        // Get front element without removing
+        FUNCTION peek():
+            IF isEmpty():
+                PRINT "Queue is empty"
+                RETURN null
+            RETURN array[front]
+
+        // Get current size of queue
+        FUNCTION getSize():
+            RETURN size
+
+        // Display all elements
+        FUNCTION display():
+            IF isEmpty():
+                PRINT "Queue is empty"
+                RETURN
+            
+            current = front
+            count = 0
+            WHILE count < size:
+                PRINT array[current]
+                current = (current + 1) % capacity
+                count = count + 1
