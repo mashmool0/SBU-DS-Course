@@ -1,0 +1,28 @@
+InOrder (T : Tree) {
+    if (T == null) {
+        return ;
+    }
+
+    InOrder(T.LC);
+    Write(T.data);
+    InOrder(T.RC);
+}
+
+PreOrder(T: Tree) {
+    if (T == Null) {
+        return ; 
+    }
+    Write(T.data)
+    PreOrder(T.LC); 
+    PreOrder(T.RC);
+}
+
+PostOrder (T:Tree) {
+    if (T == Null) {
+        return ; 
+    }
+
+    PostOrder(T.LC);
+    PostOrder(T.RC);
+    Write(T.data);  
+}
